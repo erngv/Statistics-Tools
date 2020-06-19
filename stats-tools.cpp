@@ -22,12 +22,22 @@ double mean(vector<double> v, int len)
     return mean/len;
 }
 
+double weighted_mean(vector<double> v, int len)
+{
+    double numerator = 0, denominator = 0;
+    for (int i = 0; i < v.size(); i++)
+    {
+        numerator += v[i] * v[i+len];
+        denominator += v[i+len];
+    }
+    return numerator/denominator;
+}
+
 double mode(vector<double> v, int len)
 {
     sort(v.begin(),v.end());
     int counter = 1, largest = 0;
     double mode, tmp = v[len-1];
-
     for (int i = len-2; i >= 0; i--)
     {
         if (v[i] == tmp) counter++;
@@ -47,7 +57,6 @@ double median(vector<double> v, int len)
 {
     sort(v.begin(),v.end());
     double median, m1, m2;
-
     if (len % 2 == 0) {
         m1 = v[len/2 - 1];
         m2 = v[len/2];
@@ -97,7 +106,7 @@ int main()
                 break;
             //=========================================================================================
             case 1:
-                cout << "Enter the number of elements in the array --> ";
+                cout << "Enter the number of elements in the data set --> ";
                 cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
@@ -112,10 +121,30 @@ int main()
                 break;
             //=========================================================================================
             case 2:
+                cout << "Enter the number of elements in the data set --> ";
+                cin >> len;
+                iter = 0;
+                cout << "Enter the " << len << " elements (separated by spaces) --> ";
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    v.push_back(tmp);
+                    iter++;
+                }
+                cout << "Now enter their respective weights (separated by spaces) --> ";
+                iter = 0;
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    v.push_back(tmp);
+                    iter++;
+                }
+                cout << fixed << setprecision(3) << "\nWeighted Mean = " << weighted_mean(v, len) << endl << endl;
+                v.clear();
                 break;
             //=========================================================================================
             case 3:
-                cout << "Enter the number of elements in the array --> ";
+                cout << "Enter the number of elements in the data set --> ";
                 cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
@@ -130,7 +159,7 @@ int main()
                 break;
             //=========================================================================================
             case 4:
-                cout << "Enter the number of elements in the array --> ";
+                cout << "Enter the number of elements in the data set --> ";
                 cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
@@ -148,6 +177,9 @@ int main()
                 break;
             //=========================================================================================
             case 6:
+                cout << "Enter the number whose factorial you wish to compute --> ";
+                cin >> len;
+                cout << endl << len << "! = " << factorial(len) << endl << endl;
                 break;
             //=========================================================================================
             case 7:

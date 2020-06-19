@@ -1,6 +1,7 @@
 #include <iostream>
-#include <cmath>
 #include <cstdio>
+#include <cmath>
+#include <math.h>
 #include <iomanip>
 #include <vector>
 #include <string>
@@ -109,7 +110,7 @@ void quartiles(vector<double> v, int len)
 
 double binomial(int n, int k, double prob)
 {
-    return nchoosek(n, k) * pow(prob, k) * pow(1 - prob, n - k);
+    return nchoosek(n, k) * pow(prob, k) * pow(1-prob, n-k);
 }
 
 double poisson(int k, double lambda)
@@ -136,19 +137,19 @@ int main()
                 "10. Geometric Probability Distribution (nth trial success)\n" <<
                 "11. Geometric Probability Distribution (n failures before success)\n" <<
                 "12. Normal Probability Distribution\n" <<
-                "13. Central Limit Theorem\n" <<
-                "14. Pearson Correlation Coefficient\n" <<
-                "15. Spearman's Rank Correlation Coefficient\n\n" <<
+                "13. Pearson Correlation Coefficient\n" <<
+                "14. Spearman's Rank Correlation Coefficient\n\n" <<
 
                 "Your choice --> ";
 
         cin >> choice;
         cout << endl;
         
-        vector<double> v;
+        vector<double> v, v2;
         int len, iter, n, k;
         double tmp, prob, answer = 0;
         double m, stdev, lower, upper;
+        double x_mean = 0, y_mean = 0, x_stdev = 0, y_stdev = 0, numerator = 0;
         string pick;
         
         switch(choice)
@@ -158,8 +159,7 @@ int main()
                 break;
             //==========================================================================================================
             case 1:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -174,8 +174,7 @@ int main()
                 break;
             //==========================================================================================================
             case 2:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -198,8 +197,7 @@ int main()
                 break;
             //==========================================================================================================
             case 3:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -214,8 +212,7 @@ int main()
                 break;
             //==========================================================================================================
             case 4:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -230,8 +227,7 @@ int main()
                 break;
             //==========================================================================================================
             case 5:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -253,8 +249,7 @@ int main()
                 break;
             //==========================================================================================================
             case 7:
-                cout << "Enter the number of elements in the data set --> ";
-                cin >> len;
+                cout << "Enter the number of elements in the data set --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) --> ";
                 while (iter < len)
@@ -374,12 +369,43 @@ int main()
                 break;
             //==========================================================================================================
             case 13:
+                cout << "Enter the number of elements present in both data sets --> "; cin >> len;
+                iter = 0;
+                cout << "Enter the " << len << " elements (separated by spaces) of the first data set --> ";
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    x_mean += tmp;
+                    v.push_back(tmp);
+                    iter++;
+                }
+                cout << "Now enter the " << len << " elements (separated by spaces) of the second data set --> ";
+                iter = 0;
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    y_mean += tmp;
+                    v2.push_back(tmp);
+                    iter++;
+                }
+
+                x_mean /= len; y_mean /= len;
+                for (int i = 0; i < len; i++)
+                {
+                    x_stdev += pow(v[i]-x_mean, 2);
+                    y_stdev += pow(v2[i]-y_mean, 2);
+                    numerator += (v[i]-x_mean) * (v2[i]-y_mean);
+                }
+                x_stdev /= len; y_stdev /= len;
+                x_stdev = sqrt(x_stdev); y_stdev = sqrt(y_stdev);
+
+                cout << fixed << setprecision(3) <<
+                                "\nPearson Correlation Coefficient = " << numerator/(len*x_stdev*y_stdev) << "\n\n";
+                v.clear();
+                cout << "==============================" << endl;
                 break;
             //==========================================================================================================
             case 14:
-                break;
-            //==========================================================================================================
-            case 15:
                 break;
             //==========================================================================================================
             default:

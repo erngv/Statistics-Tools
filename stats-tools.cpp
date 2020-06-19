@@ -112,6 +112,11 @@ double binomial(int n, int k, double prob)
     return nchoosek(n, k) * pow(prob, k) * pow(1 - prob, n - k);
 }
 
+double poisson(int k, double lambda)
+{
+    return (double)((pow(lambda, k) * exp((-1)*lambda))/(factorial(k)));
+}
+
 int main()
 {
     int choice;
@@ -127,12 +132,13 @@ int main()
                 "6. Factorial\n" <<
                 "7. Quartiles (Lower, Middle, Upper)\n" <<
                 "8. Binomial Probability Distribution\n" <<
-                "9. Geometric Probability Distribution\n" <<
-                "10. Poisson Probability Distribution\n" <<
-                "11. Normal Probability Distribution\n" <<
-                "12. Central Limit Theorem\n" <<
-                "13. Pearson Correlation Coefficient\n" <<
-                "14. Spearman's Rank Correlation Coefficient\n\n" <<
+                "9. Poisson Probability Distribution\n" <<
+                "10. Geometric Probability Distribution (nth trial success)\n" <<
+                "11. Geometric Probability Distribution (n failures before success)\n" <<
+                "12. Normal Probability Distribution\n" <<
+                "13. Central Limit Theorem\n" <<
+                "14. Pearson Correlation Coefficient\n" <<
+                "15. Spearman's Rank Correlation Coefficient\n\n" <<
 
                 "Your choice --> ";
 
@@ -291,12 +297,67 @@ int main()
                 break;
             //=========================================================================================================
             case 9:
+                cout << "Enter the Poisson random variable --> "; cin >> k;
+                cout << "Enter the average rate of success (lambda) --> "; cin >> prob;
+                
+                answer = poisson(k, prob);
+                cout << endl << fixed << setprecision(3) << "P(X = " << k << ") = " << answer << endl;
+
+                answer = 0;
+                for (int i = 0; i <= k; i++) answer += poisson(i, prob);
+                cout << fixed << setprecision(3) << "P(X <= " << k << ") = " << answer << endl;
+                answer = 1 - answer;
+                cout << fixed << setprecision(3) << "P(X > " << k << ") = " << answer << endl;
+                
+                answer = 0;
+                for (int i = 0; i < k; i++) answer += poisson(i, prob);
+                cout << fixed << setprecision(3) << "P(X < " << k << ") = " << answer << endl;
+                answer = 1 - answer;
+                cout << fixed << setprecision(3) << "P(X >= " << k << ") = " << answer << endl << endl;
+                
+                cout << "E[X] = " << prob << endl;
+                cout << "Var[X] = " << prob << endl << endl;
+
+                cout << "Standard Deviation = " << sqrt(prob) << endl << endl;
+                cout << "==============================" << endl;
+                answer = 0;
                 break;
             //=========================================================================================================
             case 10:
+                cout << "Enter the nth trial of success --> "; cin >> n;
+                cout << "Enter the probability of success --> "; cin >> prob;
+                
+                answer = (double)(prob * pow(1-prob, n-1));
+                cout << "Probability that success is on trial " << n << ":" << endl;
+                cout << fixed << setprecision(3) << "P(X = " << n << ") = " << answer << endl << endl;
+
+                cout << "E[X] = " << 1/prob << endl;
+                cout << "Var[X] = " << (1-prob)/(prob*prob) << endl << endl;
+                
+                cout << "Standard Deviation = " << sqrt((1-prob)/(prob*prob)) << endl << endl;
+                cout << "==============================" << endl;
+                answer = 0;
                 break;
             //=========================================================================================================
             case 11:
+                cout << "Enter the number of trials before success --> "; cin >> n;
+                cout << "Enter the probability of success --> "; cin >> prob;
+                
+                answer = (double)(prob * pow(1-prob, n));
+                cout << fixed << setprecision(3) << "P(X = " << n << ") = " << answer << endl;
+
+                answer = (double)(1 - pow(1-prob, n+1));
+                cout << fixed << setprecision(3) << "P(X <= " << n << ") = " << answer << endl;
+                
+                answer = (double)(pow(1-prob, n));
+                cout << fixed << setprecision(3) << "P(X >= " << n << ") = " << answer << endl << endl;
+                
+                cout << "E[X] = " << (1-prob)/prob << endl;
+                cout << "Var[X] = " << (1-prob)/(prob*prob) << endl << endl;
+
+                cout << "Standard Deviation = " << sqrt((1-prob)/(prob*prob)) << endl << endl;
+                cout << "==============================" << endl;
+                answer = 0;
                 break;
             //=========================================================================================================
             case 12:
@@ -306,6 +367,9 @@ int main()
                 break;
             //=========================================================================================================
             case 14:
+                break;
+            //=========================================================================================================
+            case 15:
                 break;
             //=========================================================================================================
             default:

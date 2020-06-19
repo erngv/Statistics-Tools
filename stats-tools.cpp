@@ -53,10 +53,11 @@ double mode(vector<double> v, int len)
     return mode;
 }
 
-double median(vector<double> v, int len)
+double median(vector<double> v)
 {
-    sort(v.begin(),v.end());
+    int len = v.size();
     double median, m1, m2;
+    sort(v.begin(), v.end());
     if (len % 2 == 0) {
         m1 = v[len/2 - 1];
         m2 = v[len/2];
@@ -77,6 +78,29 @@ double standard_dev(vector<double> v, int len)
     return sqrt(numerator/len);
 }
 
+void quartiles(vector<double> v, int len)
+{
+    double med;
+    sort(v.begin(), v.end());
+    vector<double> lower, upper;
+    if (len % 2 != 0) // odd length
+    {
+        med = v[len/2];
+        for (int i = 0; i < len/2; i++) lower.push_back(v[i]);
+        for (int i = (len/2)+1; i < len; i++) upper.push_back(v[i]);
+    }
+    else // even length
+    {
+        med = (v[len/2 - 1] + v[len/2]) / 2;
+        for (int i = 0; i < len/2; i++) lower.push_back(v[i]);
+        for (int i = (len/2); i < len; i++) upper.push_back(v[i]);
+    }
+
+    cout << "Lower Quartile: " << median(lower) << endl;
+    cout << "Middle Quartile: " << med << endl;
+    cout << "Upper Quartile: " << median(upper) << endl << endl;
+}
+
 int main()
 {
     int choice;
@@ -91,14 +115,13 @@ int main()
                 "5. Standard Deviation\n" <<
                 "6. Factorial\n" <<
                 "7. Quartiles (Lower, Middle, Upper)\n" <<
-                "8. Interquartile Range\n" <<
-                "9. Binomial Probability Distribution\n" <<
-                "10. Geometric Probability Distribution\n" <<
-                "11. Poisson Probability Distribution\n" <<
-                "12. Normal Probability Distribution\n" <<
-                "13. Central Limit Theorem\n" <<
-                "14. Pearson Correlation Coefficient\n" <<
-                "15. Spearman's Rank Correlation Coefficient\n\n" <<
+                "8. Binomial Probability Distribution\n" <<
+                "9. Geometric Probability Distribution\n" <<
+                "10. Poisson Probability Distribution\n" <<
+                "11. Normal Probability Distribution\n" <<
+                "12. Central Limit Theorem\n" <<
+                "13. Pearson Correlation Coefficient\n" <<
+                "14. Spearman's Rank Correlation Coefficient\n\n" <<
 
                 "Your choice --> ";
 
@@ -179,7 +202,7 @@ int main()
                     v.push_back(tmp);
                     iter++;
                 }
-                cout << fixed << setprecision(3) << "\nMedian = " << median(v, len) << endl << endl;
+                cout << fixed << setprecision(3) << "\nMedian = " << median(v) << endl << endl;
                 v.clear();
                 break;
             //=========================================================================================================
@@ -205,6 +228,19 @@ int main()
                 break;
             //=========================================================================================================
             case 7:
+                cout << "Enter the number of elements in the data set --> ";
+                cin >> len;
+                iter = 0;
+                cout << "Enter the " << len << " elements (separated by spaces) --> ";
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    v.push_back(tmp);
+                    iter++;
+                }
+                cout << endl;
+                quartiles(v, len);
+                v.clear();
                 break;
             //=========================================================================================================
             case 8:
@@ -226,9 +262,6 @@ int main()
                 break;
             //=========================================================================================================
             case 14:
-                break;
-            //=========================================================================================================
-            case 15:
                 break;
             //=========================================================================================================
             default:

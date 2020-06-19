@@ -11,7 +11,6 @@ The tools calculator asks the user to choose the computation to perform from the
 * Standard Deviation
 * Factorial
 * Quartiles
-* Interquartile Range
 * Binomial Probability Distribution
 * Geometric Probability Distribution
 * Poisson Probability Distribution

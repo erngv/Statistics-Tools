@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <iomanip>
 #include <vector>
+#include <string>
 #include <algorithm>
 using namespace std;
 
@@ -10,6 +11,11 @@ int factorial(int num)
 {
     if (num == 0) return 1;
     else return num * factorial(num - 1);
+}
+
+double nchoosek(int n, int k)
+{
+    return (double)(factorial(n)/(factorial(n-k) * factorial(k)));
 }
 
 double mean(vector<double> v, int len)
@@ -101,6 +107,11 @@ void quartiles(vector<double> v, int len)
     cout << "Upper Quartile: " << median(upper) << endl << endl;
 }
 
+double binomial(int n, int k, double prob)
+{
+    return nchoosek(n, k) * pow(prob, k) * pow(1 - prob, n - k);
+}
+
 int main()
 {
     int choice;
@@ -129,8 +140,9 @@ int main()
         cout << endl;
         
         vector<double> v;
-        int len, iter;
-        double tmp;
+        int len, iter, n, k;
+        double tmp, prob, answer = 0;
+        string pick;
         
         switch(choice)
         {
@@ -151,6 +163,7 @@ int main()
                 }
                 cout << fixed << setprecision(3) << "\nMean = " << mean(v, len) << endl << endl;
                 v.clear();
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 2:
@@ -174,6 +187,7 @@ int main()
                 }
                 cout << fixed << setprecision(3) << "\nWeighted Mean = " << weighted_mean(v, len) << endl << endl;
                 v.clear();
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 3:
@@ -189,6 +203,7 @@ int main()
                 }
                 cout << fixed << setprecision(3) << "\nMode = " << mode(v, len) << endl << endl;
                 v.clear();
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 4:
@@ -204,6 +219,7 @@ int main()
                 }
                 cout << fixed << setprecision(3) << "\nMedian = " << median(v) << endl << endl;
                 v.clear();
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 5:
@@ -219,12 +235,14 @@ int main()
                 }
                 cout << fixed << setprecision(3) << "\nStandard Deviation = " << standard_dev(v, len) << endl << endl;
                 v.clear();
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 6:
                 cout << "Enter the number whose factorial you wish to compute --> ";
                 cin >> len;
                 cout << endl << len << "! = " << factorial(len) << endl << endl;
+                cout << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 7:
@@ -241,9 +259,35 @@ int main()
                 cout << endl;
                 quartiles(v, len);
                 v.clear();
+                cout << endl << "==============================" << endl;
                 break;
             //=========================================================================================================
             case 8:
+                cout << "Enter the number of trials --> "; cin >> n;
+                cout << "Enter the number of successes --> "; cin >> k;
+                cout << "Enter the probability --> "; cin >> prob;
+                
+                answer = binomial(n, k, prob);
+                cout << endl << fixed << setprecision(3) << "P(X = " << k << ") = " << answer << endl;
+
+                answer = 0;
+                for (int i = 0; i <= k; i++) answer += binomial(n, i, prob);
+                cout << fixed << setprecision(3) << "P(X <= " << k << ") = " << answer << endl;
+                answer = 1 - answer;
+                cout << fixed << setprecision(3) << "P(X > " << k << ") = " << answer << endl;
+                
+                answer = 0;
+                for (int i = 0; i < k; i++) answer += binomial(n, i, prob);
+                cout << fixed << setprecision(3) << "P(X < " << k << ") = " << answer << endl;
+                answer = 1 - answer;
+                cout << fixed << setprecision(3) << "P(X >= " << k << ") = " << answer << endl << endl;
+                
+                cout << "E[X] = " << n*prob << endl;
+                cout << "Var[X] = " << n*prob*(1-prob) << endl << endl;
+
+                cout << "Standard Deviation = " << sqrt(n*prob*(1-prob)) << endl << endl;
+                cout << "==============================" << endl;
+                answer = 0;
                 break;
             //=========================================================================================================
             case 9:
@@ -265,7 +309,8 @@ int main()
                 break;
             //=========================================================================================================
             default:
-                cout << "Invalid input. Try again!" << endl << endl;
+                cout << "Invalid input. Try again!" << endl;
+                cout << "==============================" << endl;
                 break;
         }
     } while(choice != 0);

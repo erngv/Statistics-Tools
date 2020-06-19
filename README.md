@@ -12,10 +12,9 @@ The tools calculator asks the user to choose the computation to perform from the
 * Factorial
 * Quartiles
 * Binomial Probability Distribution
-* Geometric Probability Distribution
 * Poisson Probability Distribution
+* Geometric Probability Distribution
 * Normal Probability Distribution
-* Central Limit Theorem
 * Pearson Correlation Coefficient
 * Spearman's Rank Correlation Coefficient
 

@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iomanip>
 #include <vector>
+#include <map>
 #include <string>
 #include <algorithm>
 using namespace std;
@@ -42,7 +43,7 @@ double weighted_mean(vector<double> v, int len)
 
 double mode(vector<double> v, int len)
 {
-    sort(v.begin(),v.end());
+    sort(v.begin(), v.end());
     int counter = 1, largest = 0;
     double mode, tmp = v[len-1];
     for (int i = len-2; i >= 0; i--)
@@ -145,11 +146,12 @@ int main()
         cin >> choice;
         cout << endl;
         
-        vector<double> v, v2;
-        int len, iter, n, k;
-        double tmp, prob, answer = 0;
-        double m, stdev, lower, upper;
-        double x_mean = 0, y_mean = 0, x_stdev = 0, y_stdev = 0, numerator = 0;
+        vector<double> v, v2, v3, v4;
+        map<double, int> map3, map4;
+        int len, iter, n, k, valX = 1, valY = 1;
+        double tmp, prob, answer = 0, m, stdev, lower, upper;
+        double x_mean, y_mean, x_stdev, y_stdev, numerator, denominator;
+        bool unique = true;
         string pick;
         
         switch(choice)
@@ -369,6 +371,7 @@ int main()
                 break;
             //==========================================================================================================
             case 13:
+                x_mean = 0; y_mean = 0; x_stdev = 0; y_stdev = 0; numerator = 0;
                 cout << "Enter the number of elements present in both data sets --> "; cin >> len;
                 iter = 0;
                 cout << "Enter the " << len << " elements (separated by spaces) of the first data set --> ";
@@ -401,11 +404,88 @@ int main()
 
                 cout << fixed << setprecision(3) <<
                                 "\nPearson Correlation Coefficient = " << numerator/(len*x_stdev*y_stdev) << "\n\n";
-                v.clear();
+                v.clear(); v2.clear();
                 cout << "==============================" << endl;
                 break;
             //==========================================================================================================
             case 14:
+                x_mean = 0; y_mean = 0; x_stdev = 0; y_stdev = 0; numerator = 0;
+                cout << "Enter the number of elements present in both data sets --> "; cin >> len;
+                iter = 0;
+                cout << "Enter the " << len << " elements (separated by spaces) of the first data set --> ";
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    x_mean += tmp;
+                    v.push_back(tmp);
+                    v3.push_back(tmp);
+                    iter++;
+                }
+                cout << "Now enter the " << len << " elements (separated by spaces) of the second data set --> ";
+                iter = 0;
+                while (iter < len)
+                {
+                    cin >> tmp;
+                    y_mean += tmp;
+                    v2.push_back(tmp);
+                    v4.push_back(tmp);
+                    iter++;
+                }
+                sort(v3.begin(), v3.end());
+                sort(v4.begin(), v4.end());
+
+                for (int i = 0; i < len; i++)
+                {
+                    map3[v3[i]] = valX;
+                    map4[v4[i]] = valY;
+
+                    if (i == len-1) break;
+                    if (v3[i] != v3[i+1]) valX++;
+                    if (v4[i] != v4[i+1]) valY++;
+                }
+                for (int i = 0; i < len-1; i++)
+                {
+                    if (v3[i] == v3[i+1] || v4[i] == v4[i+1]) unique = false;
+                }
+                for (int i = 0; i < len; i++)
+                {
+                    v[i] = map3[v[i]];
+                    v2[i] = map4[v2[i]];
+                }
+
+                if (!unique)
+                {
+                    for (int i = 0; i < len; i++)
+                    {
+                        x_mean += v[i];
+                        y_mean += v2[i];
+                    }
+                    for (int i = 0; i < len; i++)
+                    {
+                        x_stdev += pow(v[i] - x_mean, 2);
+                        y_stdev += pow(v2[i] - y_mean, 2);
+                        numerator += (v[i] - x_mean) * (v2[i] - y_mean);
+                    }
+                    x_stdev /= len; y_stdev /= len;
+                    x_stdev = sqrt(x_stdev); y_stdev = sqrt(y_stdev);
+                    denominator = len * x_stdev * y_stdev;
+                    answer = numerator/denominator;
+                }
+                else
+                {
+                    double d = 0, den = len * (pow(len, 2) - 1), num = 0;
+                    for (int i = 0; i < len; i++)
+                    {
+                        d += pow((v[i] - v2[i]), 2);
+                    }
+                    num = 6.0 * d;
+                    answer = 1 - (num/den);
+                }
+            
+                cout << fixed << setprecision(3) <<
+                                "\nSpearman's Rank Correlation Coefficient = " << answer << "\n\n";
+                v.clear(); v2.clear(); v3.clear(); v4.clear(); map3.clear(); map4.clear(); answer = 0;
+                cout << "==============================" << endl;
                 break;
             //==========================================================================================================
             default:

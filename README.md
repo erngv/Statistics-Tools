@@ -18,4 +18,4 @@ The tools calculator asks the user to choose the computation to perform from the
 * Pearson Correlation Coefficient
 * Spearman's Rank Correlation Coefficient
 
-#### Use `g++ stats-tools.cpp -std=c++11` to compile this program and the `./a.out` to run it.
+##### Use `g++ stats-tools.cpp -std=c++11` to compile this program and then `./a.out` to run it.

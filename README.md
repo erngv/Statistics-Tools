@@ -1,6 +1,6 @@
 # Statistics Tools
 
-#### This simple C++ project was inspired by HackerRank's Ten Days of Statistics, which introduces different concepts related to Statistics and Probability, and its purpose is to aid on the computation of different probability distributions and other Statistics calculations
+#### This simple C++ project was inspired by HackerRank's Ten Days of Statistics, which introduces different concepts related to Statistics and Probability, and its purpose is to aid on the computation of different probability distributions and other Statistics calculations.
 
 The tools calculator asks the user to choose the computation to perform from the menu below, and specifies which kinds of inputs (i.e., number of elements, number of trials, probability of sucess/failure, etc.) it expects.
 

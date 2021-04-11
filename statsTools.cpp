@@ -15,7 +15,7 @@ int factorial(int num)
     else return num * factorial(num - 1);
 }
 
-double nchoosek(int n, int k)
+double nChooseK(int n, int k)
 {
     return (double)(factorial(n)/(factorial(n-k) * factorial(k)));
 }
@@ -30,7 +30,7 @@ double mean(vector<double> v, int len)
     return mean/len;
 }
 
-double weighted_mean(vector<double> v, int len)
+double weightedMean(vector<double> v, int len)
 {
     double numerator = 0, denominator = 0;
     for (int i = 0; i < v.size(); i++)
@@ -76,7 +76,7 @@ double median(vector<double> v)
     return median;
 }
 
-double standard_dev(vector<double> v, int len)
+double standardDev(vector<double> v, int len)
 {
     double numerator = 0, u = mean(v, len);
     for (int i = 0; i < len; i++)
@@ -111,7 +111,7 @@ void quartiles(vector<double> v, int len)
 
 double binomial(int n, int k, double prob)
 {
-    return nchoosek(n, k) * pow(prob, k) * pow(1-prob, n-k);
+    return nChooseK(n, k) * pow(prob, k) * pow(1-prob, n-k);
 }
 
 double poisson(int k, double lambda)
@@ -193,7 +193,7 @@ int main()
                     v.push_back(tmp);
                     iter++;
                 }
-                cout << fixed << setprecision(3) << "\nWeighted Mean = " << weighted_mean(v, len) << endl << endl;
+                cout << fixed << setprecision(3) << "\nWeighted Mean = " << weightedMean(v, len) << endl << endl;
                 v.clear();
                 cout << "==============================" << endl;
                 break;
@@ -238,7 +238,7 @@ int main()
                     v.push_back(tmp);
                     iter++;
                 }
-                cout << fixed << setprecision(3) << "\nStandard Deviation = " << standard_dev(v, len) << endl << endl;
+                cout << fixed << setprecision(3) << "\nStandard Deviation = " << standardDev(v, len) << endl << endl;
                 v.clear();
                 cout << "==============================" << endl;
                 break;
